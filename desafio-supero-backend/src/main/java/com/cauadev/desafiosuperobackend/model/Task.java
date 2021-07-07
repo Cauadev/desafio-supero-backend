@@ -39,6 +39,7 @@ public class Task extends RepresentationModel<Task> implements Serializable{
 	
 	private String title;
 	
+	@Lob
 	private String description;
 	
 	@Lob
@@ -49,6 +50,8 @@ public class Task extends RepresentationModel<Task> implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
 	private Stage stage;
+	
+	private String color;
 	
 
 }

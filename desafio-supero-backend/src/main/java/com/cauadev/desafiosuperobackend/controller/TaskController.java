@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,6 +26,7 @@ import com.cauadev.desafiosuperobackend.repository.TaskRepository;
 
 @RestController
 @RequestMapping("/tasks")
+@CrossOrigin("*")
 public class TaskController {
 	
 	@Autowired
@@ -35,6 +37,7 @@ public class TaskController {
 		
 		task.setDate(LocalDateTime.now());
 		task.setStage(Stage.NO_COMPLETED);
+	
 		
 		return ResponseEntity.ok(repository.save(task));
 	}
@@ -79,18 +82,23 @@ public class TaskController {
 	
 	@PutMapping
 	public ResponseEntity<Task> updateTask(@RequestBody Task task){
+		Task t = repository.findById(task.getId()).get();
+		task.setColor(t.getColor());
+		task.setStage(t.getStage());
 		return ResponseEntity.ok().body(repository.save(task));
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<Task> updateStage(@PathVariable Long id){
+	public ResponseEntity<String> updateStage(@PathVariable Long id){
 		Task task = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "task not found"));
 		
 		if(task.getStage() == Stage.COMPLETED) {
 			task.setStage(Stage.NO_COMPLETED);
 		}else task.setStage(Stage.COMPLETED);
 		
-		return ResponseEntity.ok(task);
+		repository.save(task);
+		
+		return ResponseEntity.ok("updated");
 	}
 
 }
