@@ -1,5 +1,6 @@
 package com.cauadev.desafiosuperobackend.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,8 @@ public class TaskController {
 	private TaskRepository repository;
 	
 	public ResponseEntity<Task> createTask(@RequestBody Task task) {
+		task.setDate(LocalDateTime.now());
+		task.setStage(Stage.NO_COMPLETED);
 		return ResponseEntity.ok(repository.save(task));
 	}
 	
