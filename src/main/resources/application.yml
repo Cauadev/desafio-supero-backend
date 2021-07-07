@@ -2,10 +2,10 @@ server:
   port: 8083
   
 spring:  application:    name: desafio-supero-backend
-      datasource:    url: jdbc:mysql://localhost:3306/supero?useTimeZone=trues&serverTimeZone=UTC
+      datasource:    url: jdbc:mysql://bcfc8baf116f4d:229ec35d@us-cdbr-east-04.cleardb.com/heroku_9d75c4bf0983107?reconnect=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 
+    username: bcfc8baf116f4d
+    password: 229ec35d
     
   jpa:    hibernate:      ddl-auto: update
     properties:      hibernate:
